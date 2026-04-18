@@ -1,0 +1,47 @@
+/* CSS Variables thay đổi theo data-theme */
+:root {
+  --bg: #f0f2ff;
+  --bg-card: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #666;
+  --accent: #7c6af7;
+  --danger: #ff6b6b;
+  --border: #e0e0f0;
+  --header-bg: #ffffff;
+}
+
+[data-theme='light'] {
+  --bg: #f0f2ff;
+  --bg-card: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #666;
+  --accent: #7c6af7;
+  --danger: #ff6b6b;
+  --border: #e0e0f0;
+  --header-bg: #ffffff;
+}
+
+[data-theme='dark'] {
+  --bg: #0f0f1a;
+  --bg-card: #1a1a2e;
+  --text: #e8e8f0;
+  --text-muted: #999;
+  --accent: #7c6af7;
+  --danger: #ff6b6b;
+  --border: #2a2a3e;
+  --header-bg: #16162a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
