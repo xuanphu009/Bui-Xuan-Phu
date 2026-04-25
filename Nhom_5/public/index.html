@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Buổi 06 — Demo</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+    h2 { color: #1D9E75; }
+    label { display: block; margin-top: 10px; font-size: 14px; }
+    input { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 6px; }
+    button { margin-top: 12px; padding: 9px 20px; background: #1D9E75; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #0F6E56; }
+    .result { margin-top: 10px; padding: 10px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; background: #f4f4f4; }
+    .ok  { background: #eef6f2; color: #085041; border: 1px solid #b2ddd0; }
+    .err { background: #faece7; color: #712B13; border: 1px solid #f5c4b3; }
+    hr { margin: 30px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Buổi 06 — Bài tập thực hành</h1>
+
+  <!-- FORM 1: GET /api/info -->
+  <h2>Form 1 — GET /api/info</h2>
+  <label>Tên</label>
+  <input type="text" id="info-name" placeholder="Nhập tên..."/>
+  <label>Tuổi</label>
+  <input type="number" id="info-age" placeholder="Nhập tuổi..."/>
+  <button onclick="handleInfo()">Gửi GET /api/info</button>
+  <div class="result" id="info-result">Kết quả hiện ở đây...</div>
+
+  <hr/>
+
+  <!-- FORM 2: POST /api/register -->
+  <h2>Form 2 — POST /api/register</h2>
+  <label>Tên</label>
+  <input type="text" id="reg-name" placeholder="Nhập tên..."/>
+  <label>Tuổi</label>
+  <input type="number" id="reg-age" placeholder="Nhập tuổi..."/>
+  <label>Email</label>
+  <input type="email" id="reg-email" placeholder="Nhập email..."/>
+  <button onclick="handleRegister()">Gửi POST /api/register</button>
+  <div class="result" id="reg-result">Kết quả hiện ở đây...</div>
+
+  <script>
+    // Hàm hiển thị kết quả
+    function showResult(elId, data, isOk) {
+      const el = document.getElementById(elId);
+      el.textContent = JSON.stringify(data, null, 2);
+      el.className = 'result ' + (isOk ? 'ok' : 'err');
+    }
+
+    // Form 1 — GET
+    async function handleInfo() {
+      const name = document.getElementById('info-name').value.trim();
+      const age  = document.getElementById('info-age').value.trim();
+
+      // event.preventDefault() không cần vì dùng onclick
+      const res  = await fetch(`/api/info?name=${name}&age=${age}`);
+      const data = await res.json();
+      showResult('info-result', data, res.ok);
+    }
+
+    // Form 2 — POST
+    async function handleRegister() {
+      const name  = document.getElementById('reg-name').value.trim();
+      const age   = document.getElementById('reg-age').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+
+      const res  = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, age, email })
+      });
+      const data = await res.json();
+      showResult('reg-result', data, res.ok);
+    }
+  </script>
+
+</body>
+</html>
